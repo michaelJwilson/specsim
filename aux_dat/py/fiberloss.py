@@ -38,5 +38,5 @@ for fname in files:
 
 pl.xlabel('Wavelength [AA]')
 pl.ylabel('Fiber acceptance fraction')
-pl.legend(ncol=3)
+pl.legend(ncol=3, loc=2)
 pl.savefig(os.environ['AUX'] + '/plots/fiberloss.pdf')    
