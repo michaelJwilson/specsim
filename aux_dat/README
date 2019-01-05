@@ -1,0 +1,38 @@
+1.  New repo of specsim.
+2.  quickspectra -i $DESIMODEL/data/spectra/sn-spec-lya-21.25.dat -o ./test.dat --specsimconfig pfs
+
+3.  Sullivan and Simcoe near-ir sky model
+    https://arxiv.org/abs/1207.0817
+    https://www.jstor.org/stable/get_asset/10.1086/668849?supp_index=0&refreqid=excelsior%3Ab4864ea7b3d4aca653a4bcb001e58d31
+
+    --  Removed grey and bright atmosphere paths. 
+
+4.  base_path: '/global/homes/m/mjwilson/desi/BEAST/sandbox/aux_dat'
+5.  Moon spectra to Wehrli85.  
+    https://www.nrel.gov/grid/solar-resource/spectra-wehrli.html
+    https://www.nrel.gov/grid/solar-resource/assets/data/wehrli85.txt
+
+    Comments: quoted units include /sm.  Interpreted as m2. Seems to be consistent. 
+
+6.  Extinction extension to near-ir.
+
+    -- Mauna-Kea --
+    Optical 
+
+    Table 6 of https://www.aanda.org/articles/aa/pdf/2013/01/aa19834-12.pdf    
+    http://cdsarc.u-strasbg.fr/viz-bin/qcat?J/A+A/549/A8
+        
+    Near-IR.  
+    http://www.gemini.edu/sciops/telescopes-and-sites/observing-condition-constraints/ir-transmission-spectra
+
+    Air mass of unity, water vapor column of 1mm. 
+    http://www.gemini.edu/sciops/ObsProcess/obsConstraints/atm-models/mktrans_zm_10_10.dat
+
+    https://specsim.readthedocs.io/en/stable/guide.html#atmosphere-model
+    Attenuated flux = input flux * 10 ** (- Extinction(lambda) * AIRMASS / 2.5)
+
+    Optical is already extinction, eqn. (5) of https://www.aanda.org/articles/aa/pdf/2013/01/aa19834-12.pdf
+    K \equiv e(lambda) * X  where X is the airmass.  See Specsim read the docs. 
+
+  
+    Necessary to convert near-ir.  
