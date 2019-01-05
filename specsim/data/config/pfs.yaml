@@ -5,7 +5,7 @@ name: PFS QuickSim
 base_path: '{DESIMODEL}/data'
 
 # Be verbose during the simulation?
-verbose: no
+verbose: yes
 
 # Specify the wavelength grid to use for simulation. For comparison, the
 # table below summarizes the ranges of non-zero throughput in each camera,
@@ -83,7 +83,7 @@ atmosphere:
             columns:
                 wavelength: { index: 0, unit: Angstrom }
                 extinction_coefficient: { index: 1 }
-            path: spectra/ZenithExtinction-KPNO.dat
+            path: spectra/ZenithExtinction-MKO.dat
     # Should extinction be applied to the sky emission?
     extinct_emission: yes
     # Airmass to use when the pointing is not calculated from the source
@@ -95,23 +95,22 @@ atmosphere:
 # The instrument configuration is interpreted and validated by the
 # specsim.instrument module.
 instrument:
-    # See DESI documents 334, 336, 347 for details.
-    name: DESI
+    name: PFS
     constants:
-        # These values are copied from desimodel/data/desi.yaml
-        primary_mirror_diameter: 3.797 m
-        obscuration_diameter: 1.8 m
-        support_width: 0.025 m
-        fiber_diameter: 107.0 um
-        field_radius: 414.0 mm
+        primary_mirror_diameter: 8.200 m  # Effective light-affecting area; E.g. 1608.01075
+        obscuration_diameter: 0.0 m       # As effective area, assumed zero.
+        support_width: 0.0 m              # As effective area, assumed zero.
+        fiber_diameter: 189.0 um          # Diameter (Core/Cladding/Buffer)  127 / 165 / 189 um @ Table 1 of https://pdfs.semanticscholar.org/507c/1b23c8e790a00de7cb65eade8101b58eb8c9.pdf
+        field_radius: 224.0 mm            # DESI:  414.0 mm; twice of distance from field centre to farthest positioner is 448 mm for PFS.
+                                          #                  Effective diameter of circle whose area is equal to 407.41 mm
     plate_scale:
         table:
-            path: focalplane/platescale.txt
+            path: focalplane/platescale-pfs.txt
             format: ascii
             columns:
                 radius: { index: 0, unit: mm }
-                radial_scale: { index: 6, unit: um/arcsec }
-                azimuthal_scale: { index: 7, unit: um/arcsec }
+                radial_scale: { index: 1, unit: um/arcsec }
+                azimuthal_scale: { index: 2, unit: um/arcsec }
     fiberloss:
         # Method for calculating fiberloss fractions.
         # Either galsim or table or fastsim.
