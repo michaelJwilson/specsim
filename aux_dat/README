@@ -1,4 +1,5 @@
 1.  New repo of specsim.
+
 2.  quickspectra -i $DESIMODEL/data/spectra/sn-spec-lya-21.25.dat -o ./test.dat --specsimconfig pfs
 
 3.  Sullivan and Simcoe near-ir sky model
@@ -7,7 +8,8 @@
 
     --  Removed grey and bright atmosphere paths. 
 
-4.  base_path: '/global/homes/m/mjwilson/desi/BEAST/sandbox/aux_dat'
+4.  base_path: '/global/homes/m/mjwilson/desi/BEAST/sandbox/aux_dat' i.e. $AUX
+
 5.  Moon spectra to Wehrli85.  
     https://www.nrel.gov/grid/solar-resource/spectra-wehrli.html
     https://www.nrel.gov/grid/solar-resource/assets/data/wehrli85.txt
