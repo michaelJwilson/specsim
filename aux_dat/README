@@ -38,13 +38,13 @@
     Necessary to convert near-ir from Transmission to extinction.  
     Downsampled to 2A to match MKO optical.
 
-    Is this sufficient?
-    
+    Is this sufficient?    
     Should extinction be applied to the sky emission?
 
-7.  PFS basic instrument.
-    Mirror eff. area: 8.2m
-    As effective, set support_width and obscuration to 0.0;  Is this really true of obscuration?
+7.  PFS basic instrument:
+        Mirror eff. area: 8.2m
+    	As effective, set support_width and obscuration to 0.0;  
+    	Is this really true of obscuration?
 
     field_radius:  How to treat hexagon to cicular comparison?  Stick with greatest distance across or equate
                    area?
@@ -59,8 +59,10 @@
   		   For DESI, the increase is 4% percent. 
 
 		   --  I've renormalised the curve to have central MPS of 90.9 
-                       and rescaled wave length by two to give ~ 8% diff, closer to 10% of PFS than original DESI 4%. 
-                       But similar curves.
+                       and rescaled wavelength to give 10% difference across field (radius).
+		       Radial and azimuthal directions treated similarly. 
  
+    fiber loss     Linear extrapolation in wavelength. 
     
-    blur values:   Stick with DESI values. 
+    blur values:   Stick with DESI files?  No need for wavelength extension?  Assumed zero? 
+    offset values: Stick with DESI files?  No need for wavelength extension?  Assumed zero?

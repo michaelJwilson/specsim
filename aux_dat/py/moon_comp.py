@@ -1,3 +1,4 @@
+import os 
 import numpy as np
 import pylab as pl
 
@@ -7,12 +8,14 @@ from desispec.interpolation import resample_flux
 save         = True
 plot         = True
 
-wehrli       = np.loadtxt('wehrli85.txt')
+root         = os.environ['AUX']
+
+wehrli       = np.loadtxt(root + 'wehrli85.txt')
 wehrli[:,0] *= 10.  ##  nm to AA. 
 wehrli[:,1] /= 10.  ##  W / m2 / nm to W / m2 / A. 
 wehrli[:,1] *= 1.e3 ##  ergs/s/cm2/A
 
-moon       = np.loadtxt('sky/solarspec.txt')
+moon       = np.loadtxt(root + 'sky/solarspec.txt')
 moon[:,2] *= 1.e-4  ## W/m2/um to W/m2/A
 moon[:,2] *= 1.e3   ##  ergs/s/cm2/A                     
 
@@ -22,7 +25,7 @@ oflux  = resample_flux(owaves, wehrli[:,0], wehrli[:,1], ivar=None, extrapolate=
 output = np.c_[owaves, oflux]
 
 if save:
-  np.savetxt('solarspec-nearir.txt', output, header='#  Wave [A]  Flux [ergs/s/cm2/A]\n#  https://www.nrel.gov/grid/solar-resource/assets/data/wehrli85.txt', fmt='%.6lf \t %.6le')
+  np.savetxt(root + 'solarspec-nearir.txt', output, header='#  Wave [A]  Flux [ergs/s/cm2/A]\n#  https://www.nrel.gov/grid/solar-resource/assets/data/wehrli85.txt', fmt='%.6lf \t %.6le')
 
 if plot:
   pl.plot(owaves, oflux, 'k-', label='Near-ir')
@@ -33,4 +36,4 @@ if plot:
   pl.ylabel(r'ergs/s/cm$^2$/$\AA$')
   pl.xlim(0., 2.e4)
 
-  pl.savefig('plots/moon_comp.pdf')
+  pl.savefig(root + 'plots/moon_comp.pdf')

@@ -1,3 +1,4 @@
+import os 
 import numpy as np
 import pylab as pl
 
@@ -5,10 +6,12 @@ import pylab as pl
 plot  = True
 save  = True
 
-orig  = np.loadtxt('spectra/ZenithExtinction-KPNO.dat')
+root  = os.environ['AUX']
 
-mkopt = np.loadtxt('MaunaKea_opt-skytrans.txt')
-mknir = np.loadtxt('MaunaKea_nearir-skytrans_Airmass_1_Water_1mm.txt')
+orig  = np.loadtxt(os.environ['DESIMODEL'] + '/spectra/ZenithExtinction-KPNO.dat')
+
+mkopt = np.loadtxt(root + '/MaunaKea_opt-skytrans.txt')
+mknir = np.loadtxt(root + '/MaunaKea_nearir-skytrans_Airmass_1_Water_1mm.txt')
 
 ##  Convert wave[um] to [AA] and convert NIR from transmission to extinction. 
 mknir[:,0] *= 1.e4
@@ -32,7 +35,7 @@ output = np.c_[np.concatenate([mkopt[:,0], dmknir[:,0]]), np.concatenate([mkopt[
 if save:
   header = '# Wave [A]  Extinction\n# http://cdsarc.u-strasbg.fr/viz-bin/qcat?J/A+A/549/A8\n# http://www.gemini.edu/sciops/ObsProcess/obsConstraints/atm-models/mktrans_zm_10_10.dat'
 
-  np.savetxt('ZenithExtinction-MKO.dat', output, header=header)
+  np.savetxt(root + '/ZenithExtinction-MKO.dat', output, header=header)
 
 if plot:
   pl.plot(orig[:,0],     orig[:,1], 'k-', label='KPNO')
@@ -47,4 +50,4 @@ if plot:
   pl.ylabel(r'e($\lambda$)')
 
   pl.legend()
-  pl.savefig('plots/extinction_comp.pdf', bbox_inches='tight')
+  pl.savefig(root + '/plots/extinction_comp.pdf', bbox_inches='tight')
