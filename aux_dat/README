@@ -68,3 +68,6 @@
     
     blur values:   Stick with DESI files?  No need for wavelength extension?  Assumed zero? 
     offset values: Stick with DESI files?  No need for wavelength extension?  Assumed zero?
+
+8.  22 Mag AB source.
+    Extended range to [2.e3, 2.e4] AA.
