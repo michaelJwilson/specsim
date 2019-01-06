@@ -63,6 +63,9 @@ observatories = {
     # http://www.ctio.noao.edu/noao/content/coordinates-observatories-cerro-tololo-and-cerro-pachon
     'LSST': astropy.coordinates.EarthLocation.from_geodetic(
         lat='-30d14m40.68s', lon='-70d44m57.90s', height=2647.*u.m),
+    # https://www.subarutelescope.org/Observing/Telescope/Parameters/
+    'NAOJ': astropy.coordinates.EarthLocation.from_geodetic(
+        lat='19d49m32s', lon='-155d28m34s', height=4139.*u.m, ellipsoid='WGS84'),
 }
 
 
