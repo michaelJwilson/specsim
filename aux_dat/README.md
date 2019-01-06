@@ -95,3 +95,30 @@
     Mean humidity: - 40%
 
     How does this get mapped to [0,1]?
+
+11. Throughput values.    
+    https://pfs.ipmu.jp/research/performance.html
+
+    Resulting warnings:
+
+    /global/homes/m/mjwilson/desi/BEAST/sandbox/specsim/specsim/simulator.py:551: RuntimeWarning: divide by zero encountered in true_divide
+    source_flux_to_photons * camera.throughput.reshape(-1, 1)))
+
+    /global/homes/m/mjwilson/desi/BEAST/sandbox/specsim/specsim/simulator.py:555: RuntimeWarning: invalid value encountered in multiply
+    output['flux_calibration'] * output['num_source_electrons'])
+
+12.  Basic Camera values
+     Table 1 of https://arxiv.org/pdf/1206.0737.pdf
+     
+                                            b                 r           IR            
+     read noise [e- rms / pix]              3.                3.          4.
+     dark current [e-/pix/sec]            3.89e-4           3.89e-4       0.01
+     dark current [e-/pix/hr]	          1.40040           1.40040       36.0
+     gain [e- / adu]                        --                --          -- 
+     pixel size / pixel scale [A/pix]       0.71              0.85        0.81
+
+     How significant is the gain?  How likely to be different from 1 (in near-ir).
+
+13.  CCD
+
+

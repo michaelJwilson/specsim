@@ -24,7 +24,7 @@ verbose: yes
 #        CCD 3569.000 5949.000 5625.000 7741.000 7435.000 9834.000
 wavelength_grid:
     unit: Angstrom
-    min: 3550.0
+    min: 3800.0
     max: 9850.0
     step: 0.1
 
@@ -186,17 +186,17 @@ instrument:
     cameras:
         b:
             constants:
-                # These values are copied from desimodel/data/desi.yaml
-                read_noise: 3.41 electron/pixel**2
+                # These values are copied from Table 1 of https://arxiv.org/pdf/1206.0737.pdf
+                read_noise: 3.00 electron/pixel**2
                 # We treat "pixel" as a linear unit, so we need pixel**2 here.
-                dark_current: 2.0 electron/(hour pixel**2)
+                dark_current: 1.40040  electron/(hour pixel**2)
                 gain: 1.0 electron/adu
                 # Clip the resolution matrix at this number of sigmas.
                 num_sigmas_clip: 5
                 # Output pixels are used to report simulation results but are
                 # not the physical pixels.  The output pixel size must be a
                 # multiple of wavelength_grid.step.
-                output_pixel_size: 0.5 Angstrom
+                output_pixel_size: 0.71 Angstrom
             ccd:
                 table:
                     path: specpsf/psf-quicksim.fits
@@ -215,7 +215,7 @@ instrument:
                         neff_spatial: { name: neff_spatial }
             throughput:
                 table:
-                    path: throughput/thru-b.fits
+                    path: throughput/thru-b-pfs.fits
                     hdu: THROUGHPUT
                     extrapolated_value: 0.0
                     columns:
@@ -224,16 +224,16 @@ instrument:
         r:
             constants:
                 # These values are copied from desimodel/data/desi.yaml
-                read_noise: 2.6 electron/pixel**2
+                read_noise: 3.00 electron/pixel**2
                 # We treat "pixel" as a linear unit, so we need pixel**2 here.
-                dark_current: 2.4 electron/(hour pixel**2)
+                dark_current: 1.40040  electron/(hour pixel**2)
                 gain: 1.0 electron/adu
                 # Clip the resolution matrix at this number of sigmas.
                 num_sigmas_clip: 5
                 # Output pixels are used to report simulation results but are
                 # not the physical pixels.  The output pixel size must be a
                 # multiple of wavelength_grid.step.
-                output_pixel_size: 0.5 Angstrom
+                output_pixel_size: 0.85 Angstrom
             ccd:
                 table:
                     path: specpsf/psf-quicksim.fits
@@ -252,7 +252,7 @@ instrument:
                         neff_spatial: { name: neff_spatial }
             throughput:
                 table:
-                    path: throughput/thru-r.fits
+                    path: throughput/thru-r-lowres-pfs.fits
                     hdu: THROUGHPUT
                     extrapolated_value: 0.0
                     columns:
@@ -261,16 +261,16 @@ instrument:
         z:
             constants:
                 # These values are copied from desimodel/data/desi.yaml
-                read_noise: 2.6 electron/pixel**2
+                read_noise: 4.00 electron/pixel**2
                 # We treat "pixel" as a linear unit, so we need pixel**2 here.
-                dark_current: 2.4 electron/(hour pixel**2)
+                dark_current: 36 electron/(hour pixel**2)
                 gain: 1.0 electron/adu
                 # Clip the resolution matrix at this number of sigmas.
                 num_sigmas_clip: 5
                 # Output pixels are used to report simulation results but are
                 # not the physical pixels.  The output pixel size must be a
                 # multiple of wavelength_grid.step.
-                output_pixel_size: 0.5 Angstrom
+                output_pixel_size: 0.81 Angstrom
             ccd:
                 table:
                     path: specpsf/psf-quicksim.fits
@@ -289,7 +289,7 @@ instrument:
                         neff_spatial: { name: neff_spatial }
             throughput:
                 table:
-                    path: throughput/thru-z.fits
+                    path: throughput/thru-nearir-pfs.fits
                     hdu: THROUGHPUT
                     extrapolated_value: 0.0
                     columns:
