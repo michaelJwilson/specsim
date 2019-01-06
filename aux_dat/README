@@ -71,3 +71,27 @@
 
 8.  22 Mag AB source.
     Extended range to [2.e3, 2.e4] AA.
+
+9.  Left source profile and location alone.
+
+10. NAOJ Observatory. 
+    Added NAOJ to SpecSim.transform. 
+
+    https://www.subarutelescope.org/Observing/Telescope/Parameters/
+    https://subarutelescope.org/Introduction/specifications.
+
+    "The differences between these two datums for North America is not discernible with mapping/GIS grade or consumer grade GPS equipment.html"
+    i.e. within a ~ meter.
+    https://www.esri.com/arcgis-blog/products/arcgis-desktop/mapping/wgs84-vs-nad83/
+    
+    Latitude: +19 deg N  49' 32'' N (NAD83 / WGS84)
+    Longitude: +155 deg W 28' 34'' W (NAD83 / WGS84)
+    Altitude: 4139 m (Elevation axis is at 4163 m)
+
+    'NAOJ': astropy.coordinates.EarthLocation.from_geodetic(
+    lat='19d49m32s', lon='-155d28m34s', height=4139.*u.m, ellipsoid='WGS84')
+
+    As per https://subarutelescope.org/Introduction/specifications.html, 
+    Mean humidity: - 40%
+
+    How does this get mapped to [0,1]?
