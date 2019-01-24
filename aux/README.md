@@ -123,3 +123,4 @@
      Note:  arrays defining the CCD properties must all have identical wavelength coverage
      Dispersion and Resolution available from Table 1 of https://arxiv.org/pdf/1608.01075.pdf
 
+     See py/ccd.py

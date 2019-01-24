@@ -25,7 +25,7 @@ NIRMin  =  9400.
 NIRMax  = 12600.
 
 ##  Load fits to be overwritten, and rename to NIR.                                                                                                                                                                                        
-dat                     = fits.open(os.environ['AUX'] + '/psf-quicksim.fits')
+dat                     = fits.open(os.environ['AUX'] + '/_psf-quicksim.fits')
 
 index                   = dat.index_of('QUICKSIM-Z')
 dummy                   = dat.pop(index)
@@ -41,7 +41,7 @@ primary_hdu         = fits.PrimaryHDU(header=dat[0].header)
 hdul                = fits.HDUList([primary_hdu])
 
 for (min_wave, max_wave, neff_spatial, fwhm_resolution, color, label) in [(BlueMin, BlueMax, 0.4765, 0.334, 'b', 'B'), (RedMin, RedMax, 0.357, 0.3213, 'r', 'R'), (NIRMin, NIRMax, 0.341, 0.272, 'indigo', 'NIR')]:
-  wave              =  np.arange(min_wave, max_wave + 0.5, 0.5)
+  wave              =  np.arange(min_wave, max_wave, 0.5)
 
   ##  Note:  4k wavelength, 2k  spatial!
   AngPerRow         =  np.ones_like(wave) * (max_wave - min_wave) / 4.e3   ##  [A/pixel] in the wavelength (column) direction. 
@@ -65,7 +65,7 @@ for (min_wave, max_wave, neff_spatial, fwhm_resolution, color, label) in [(BlueM
   WMAX_ALL =                 5949                       / Last wavelength [Angstroms] 
   '''
 
-  t  = fits.BinTableHDU.from_columns([c1, c2, c3])
+  t  = fits.BinTableHDU.from_columns([c1, c2, c3, c4], name='QUICKSIM-%s' % label)
 
   hdul.append(t)
 
@@ -74,4 +74,4 @@ pl.yscale('linear')
 pl.legend(ncol=2)
 pl.show()
 
-hdul.writeto(os.environ['AUX'] + 'psf-quicksim-PFS.fits')
+hdul.writeto(os.environ['AUX'] + 'psf-quicksim-PFS.fits', overwrite=True)

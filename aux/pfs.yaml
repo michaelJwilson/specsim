@@ -2,7 +2,8 @@ name: PFS QuickSim
 
 # The base path is pre-pended to all non-absolute path values below.
 # {...} will be expanded using environment variables.
-base_path: '{DESIMODEL}/data'
+# base_path: '{DESIMODEL}/data'
+base_path: '{AUX}'
 
 # Be verbose during the simulation?
 verbose: yes
@@ -24,9 +25,9 @@ verbose: yes
 #        CCD 3569.000 5949.000 5625.000 7741.000 7435.000 9834.000
 wavelength_grid:
     unit: Angstrom
-    min: 3800.0
-    max: 9850.0
-    step: 0.1
+    min:  3800.0
+    max: 12600.0
+    step:    0.1
 
 # The atmosphere configuration is interpreted and validated by the
 # specsim.atmosphere module.
@@ -44,7 +45,7 @@ atmosphere:
                     unit: 1e-17 erg / (Angstrom arcsec2 cm2 s)
             paths:
                 # Each path defines a possible condition.
-                dark: spectra/spec-sky-nearir.dat
+                dark: spec-sky-nearir.dat
         # Specify the current condition.
         condition: dark
     # Atmospheric seeing (only used when instrument.fiberloss.method = galsim)
@@ -66,7 +67,7 @@ atmosphere:
                 flux:
                     index: 1
                     unit: erg / (cm2 s Angstrom)
-            path: sky/solarspec-nearir.txt
+            path: solarspec-nearir.txt
             format: ascii.basic
         constants:
             # Phase of the moon from 0 (full) to 1 (new).
@@ -83,7 +84,7 @@ atmosphere:
             columns:
                 wavelength: { index: 0, unit: Angstrom }
                 extinction_coefficient: { index: 1 }
-            path: spectra/ZenithExtinction-MKO.dat
+            path: ZenithExtinction-MKO.dat
     # Should extinction be applied to the sky emission?
     extinct_emission: yes
     # Airmass to use when the pointing is not calculated from the source
@@ -105,7 +106,7 @@ instrument:
                                           #                  Effective diameter of circle whose area is equal to 407.41 mm
     plate_scale:
         table:
-            path: focalplane/platescale-pfs.txt
+            path: platescale-pfs.txt
             format: ascii
             columns:
                 radius: { index: 0, unit: mm }
@@ -127,12 +128,12 @@ instrument:
             format: ascii
             paths:
                 # Each path corresponds to a different source type.
-                qso: throughput/fiberloss-qso-pfs.dat
-                elg: throughput/fiberloss-elg-pfs.dat
-                lrg: throughput/fiberloss-lrg-pfs.dat
-                star: throughput/fiberloss-star-pfs.dat
-                sky: throughput/fiberloss-sky-pfs.dat
-                perfect: throughput/fiberloss-perfect-pfs.dat
+                qso: fiberloss-qso-pfs.dat
+                elg: fiberloss-elg-pfs.dat
+                lrg: fiberloss-lrg-pfs.dat
+                star: fiberloss-star-pfs.dat
+                sky: fiberloss-sky-pfs.dat
+                perfect: fiberloss-perfect-pfs.dat
             columns:
                 wavelength: { index: 0, unit: Angstrom }
                 fiber_acceptance: { index: 1 }
@@ -198,23 +199,23 @@ instrument:
                 # multiple of wavelength_grid.step.
                 output_pixel_size: 1.00 Angstrom  ##  0.71 Angstrom
             ccd:
-	        #  Blue and Red are 4k x 2k CCDs, NIR is 4k x 4k.  For desi and pfs, 15um pixels.
-		#  Dispersion:  0.7, 0.9, 0.4, 0.8 [A/pix] for B, LR, HR (galactic archaeology) and NIR.
-		#  wave:  [3569., 3569.5, ...,  5949.]).
-		#  Angstroms per row:  (MaxBWave-MinBWave) / 4k. [Angstroms per pixel];  e.g, for desi, (3569.0, 5949.0)/4k. = 0.595;  Sampled every 0.5A.
-		#  neff_spatial:       Effective number of cross-dispersion pixels, e.g., for desi, [3.548, 3.73] in pixels;  For PFS, 0.4765, 0.357, 0.341 pixels, see fwhm_resolution.  
-		#  fwhm_resolution:    Wavelength dispersion FWHM [Angstrom], e.g., for desi, 1.7A.       
+                #  Blue and Red are 4k x 2k CCDs, NIR is 4k x 4k.  For desi and pfs, 15um pixels.
+                #  Dispersion:  0.7, 0.9, 0.4, 0.8 [A/pix] for B, LR, HR (galactic archaeology) and NIR.
+                #  wave:  [3569., 3569.5, ...,  5949.]).
+                #  Angstroms per row:  (MaxBWave-MinBWave) / 4k. [Angstroms per pixel];  e.g, for desi, (3569.0, 5949.0)/4k. = 0.595;  Sampled every 0.5A.
+                #  neff_spatial:       Effective number of cross-dispersion pixels, e.g., for desi, [3.548, 3.73] in pixels;  For PFS, 0.4765, 0.357, 0.341 pixels, see fwhm_resolution.  
+                #  fwhm_resolution:    Wavelength dispersion FWHM [Angstrom], e.g., for desi, 1.7A.       
                 #                      From KG, nominal RMS Spot Radius: 7.148, 5.360, 5.116 um = 0.4765, 0.357, 0.341 pixels; dispersion * pixels -> 0.334, 0.3213 (low res), 0.272 A.    
-		#  
+                #  
                 table:
-                    path: specpsf/psf-quicksim.fits
+                    path: psf-quicksim-PFS.fits
                     hdu: QUICKSIM-B
                     extrapolated_value: 0.0
                     columns:
                         wavelength: { name: wavelength }
                         row_size:
                             name: angstroms_per_row        
-			    # Angstroms per CCD pixel row.  [Angstrom/pixel] 
+                            # Angstroms per CCD pixel row.  [Angstrom/pixel] 
                             # The file uses Angstrom / row but "row" is not
                             # recognized by astropy.units so we replace it with
                             # the linear "pixel" unit.
@@ -224,7 +225,7 @@ instrument:
                         neff_spatial: { name: neff_spatial }
             throughput:
                 table:
-                    path: throughput/thru-b-pfs.fits
+                    path: thru-b-pfs.fits
                     hdu: THROUGHPUT
                     extrapolated_value: 0.0
                     columns:
@@ -245,7 +246,7 @@ instrument:
                 output_pixel_size: 0.85 Angstrom
             ccd:
                 table:
-                    path: specpsf/psf-quicksim.fits
+                    path: psf-quicksim-PFS.fits
                     hdu: QUICKSIM-R
                     extrapolated_value: 0.0
                     columns:
@@ -261,13 +262,13 @@ instrument:
                         neff_spatial: { name: neff_spatial }
             throughput:
                 table:
-                    path: throughput/thru-r-lowres-pfs.fits
+                    path: thru-r-lowres-pfs.fits
                     hdu: THROUGHPUT
                     extrapolated_value: 0.0
                     columns:
                         wavelength: { name: wavelength, unit: Angstrom }
                         throughput: { name: throughput }
-        z:
+        nir:
             constants:
                 # These values are copied from desimodel/data/desi.yaml
                 read_noise: 4.00 electron/pixel**2
@@ -282,8 +283,8 @@ instrument:
                 output_pixel_size: 0.81 Angstrom
             ccd:
                 table:
-                    path: specpsf/psf-quicksim.fits
-                    hdu: QUICKSIM-Z
+                    path: psf-quicksim-PFS.fits
+                    hdu: QUICKSIM-NIR
                     extrapolated_value: 0.0
                     columns:
                         wavelength: { name: wavelength }
@@ -298,7 +299,7 @@ instrument:
                         neff_spatial: { name: neff_spatial }
             throughput:
                 table:
-                    path: throughput/thru-nearir-pfs.fits
+                    path: thru-nearir-pfs.fits
                     hdu: THROUGHPUT
                     extrapolated_value: 0.0
                     columns:
@@ -313,7 +314,7 @@ source:
     type: qso
     table:
         format: ascii
-        path: spectra/spec-ABmag22.0-nearir.dat
+        path: spec-ABmag22.0-nearir.dat
         columns:
             wavelength: { index: 0, unit: Angstrom }
             flux:
