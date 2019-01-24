@@ -96,10 +96,10 @@ atmosphere:
 # specsim.instrument module.
 instrument:
     name: PFS
-    constants:
+    constants:  
         primary_mirror_diameter: 8.200 m  # Effective light-affecting area; E.g. 1608.01075
-        obscuration_diameter: 0.0 m       # As effective area, assumed zero.
-        support_width: 0.0 m              # As effective area, assumed zero.
+        obscuration_diameter: 1.83 m      # 0.22 x 8.3m. https://github.com/Subaru-PFS/spt_ExposureTimeCalculator/blob/master/python/pfsspecsim/config/PFS.dat
+        support_width: 0.0 m              # Assumed zero.
         fiber_diameter: 189.0 um          # Diameter (Core/Cladding/Buffer)  127 / 165 / 189 um @ Table 1 of https://pdfs.semanticscholar.org/507c/1b23c8e790a00de7cb65eade8101b58eb8c9.pdf
         field_radius: 224.0 mm            # DESI:  414.0 mm; twice of distance from field centre to farthest positioner is 448 mm for PFS.
                                           #                  Effective diameter of circle whose area is equal to 407.41 mm
@@ -166,9 +166,9 @@ instrument:
         # we cannot correct for this during commissionning
         # Uncomment any one of these lines to select a different random set.
         # If all lines are commented out, this effect is ignored.
-        #static: throughput/DESI-0347_static_offset_1.fits
-        #static: throughput/DESI-0347_static_offset_2.fits
-        #static: throughput/DESI-0347_static_offset_3.fits
+        # static: throughput/DESI-0347_static_offset_1.fits
+        # static: throughput/DESI-0347_static_offset_2.fits
+        # static: throughput/DESI-0347_static_offset_3.fits
         #
         # random achromatic and uncorrelated offsets with 1D rms = sigma1d
         # ( per axis, i.e. sqrt(mean(dx**2+dy**2))=sqrt(2)*sigma1d )
@@ -196,8 +196,16 @@ instrument:
                 # Output pixels are used to report simulation results but are
                 # not the physical pixels.  The output pixel size must be a
                 # multiple of wavelength_grid.step.
-                output_pixel_size: 0.71 Angstrom
+                output_pixel_size: 1.00 Angstrom  ##  0.71 Angstrom
             ccd:
+	        #  Blue and Red are 4k x 2k CCDs, NIR is 4k x 4k.  For desi and pfs, 15um pixels.
+		#  Dispersion:  0.7, 0.9, 0.4, 0.8 [A/pix] for B, LR, HR (galactic archaeology) and NIR.
+		#  wave:  [3569., 3569.5, ...,  5949.]).
+		#  Angstroms per row:  (MaxBWave-MinBWave) / 4k. [Angstroms per pixel];  e.g, for desi, (3569.0, 5949.0)/4k. = 0.595;  Sampled every 0.5A.
+		#  neff_spatial:       Effective number of cross-dispersion pixels, e.g., for desi, [3.548, 3.73] in pixels;  For PFS, 0.4765, 0.357, 0.341 pixels, see fwhm_resolution.  
+		#  fwhm_resolution:    Wavelength dispersion FWHM [Angstrom], e.g., for desi, 1.7A.       
+                #                      From KG, nominal RMS Spot Radius: 7.148, 5.360, 5.116 um = 0.4765, 0.357, 0.341 pixels; dispersion * pixels -> 0.334, 0.3213 (low res), 0.272 A.    
+		#  
                 table:
                     path: specpsf/psf-quicksim.fits
                     hdu: QUICKSIM-B
@@ -205,7 +213,8 @@ instrument:
                     columns:
                         wavelength: { name: wavelength }
                         row_size:
-                            name: angstroms_per_row
+                            name: angstroms_per_row        
+			    # Angstroms per CCD pixel row.  [Angstrom/pixel] 
                             # The file uses Angstrom / row but "row" is not
                             # recognized by astropy.units so we replace it with
                             # the linear "pixel" unit.
