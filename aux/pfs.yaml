@@ -115,7 +115,7 @@ instrument:
     fiberloss:
         # Method for calculating fiberloss fractions.
         # Either galsim or table or fastsim.
-        method: fastsim
+        method: table # fastsim
         # Number of wavelengths where fiberloss should be calculated
         # and interpolated. Ignored unless method is galsim.
         num_wlen: 11
@@ -143,19 +143,19 @@ instrument:
         # and used by specsim/fastfiberacceptance.py
         # Comment out this line to disable the "fastsim" mode (e.g., if
         # this file is not available or describes a different config).
-        fast_fiber_acceptance_path: throughput/galsim-fiber-acceptance.fits
+        # fast_fiber_acceptance_path: throughput/galsim-fiber-acceptance.fits
     blur:
         # Read RMS blur values tabulated as a function of field angle and
         # wavelength, and derived from ray tracing simulations.  For details,
         # see $DESIMODEL/doc/nb/DESI-0347_Throughput.ipynb.
-        path: throughput/DESI-0347_blur.ecsv
+        path: DESI-0347_blur.ecsv
         # The ECSV format is not auto-detected so we specify it explicitly.
         format: ascii.ecsv
     offset:
         # Read radial centroid offsets tabulated as a function of field angle
         # and wavelength, and derived from ray tracing simulations.  For
         # details, see $DESIMODEL/doc/nb/DESI-0347_Throughput.ipynb.
-        path: throughput/DESI-0347_offset.ecsv
+        path: DESI-0347_offset.ecsv
         # The ECSV format is not auto-detected so we specify it explicitly.
         format: ascii.ecsv
         #
@@ -268,7 +268,7 @@ instrument:
                     columns:
                         wavelength: { name: wavelength, unit: Angstrom }
                         throughput: { name: throughput }
-        nir:
+        z:  ##  Fixed to z for line 611 of desisim/simexp.py
             constants:
                 # These values are copied from desimodel/data/desi.yaml
                 read_noise: 4.00 electron/pixel**2

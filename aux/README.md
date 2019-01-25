@@ -124,3 +124,6 @@
      Dispersion and Resolution available from Table 1 of https://arxiv.org/pdf/1608.01075.pdf
 
      See py/ccd.py
+
+14.  Note:  if running with quickspectra. necessary changes to sim_spectra to remove desi 
+            assumptions on throughput wavelength and fiberloss method.
